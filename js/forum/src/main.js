@@ -4,7 +4,6 @@
 import app from 'flarum/app';
 import { extend } from 'flarum/extend';
 import SignUpModal from 'flarum/components/SignUpModal';
-// import LogInModal from 'flarum/components/LogInModal';
 
 app.initializers.add('flarum-recaptcha', () => {
   const isAvail = () => typeof grecaptcha !== 'undefined';
@@ -41,14 +40,14 @@ app.initializers.add('flarum-recaptcha', () => {
       $.getScript(
         `https://www.google.com/recaptcha/api.js?hl=${app.locale}&render=explicit`,
         () => {
-          let attemps = 0;
+          let attempts = 0;
           const interval = setInterval(() => {
-            ++attemps;
+            ++attempts;
             if (isAvail()) {
               clearInterval(interval);
               render();
             }
-            if (attemps > 100) {
+            if (attempts > 100) {
               clearInterval(interval);
             }
           }, 100);
@@ -57,13 +56,11 @@ app.initializers.add('flarum-recaptcha', () => {
     }
   }
   extend(SignUpModal.prototype, 'config', load);
-  // extend(LogInModal.prototype, 'config', load);
 
   function clean() {
     this.$('.g-recaptcha').remove();
   }
   extend(SignUpModal.prototype, 'logIn', clean);
-  // extend(LogInModal.prototype, 'signUp', clean);
 
   extend(SignUpModal.prototype, 'submitData', function (data) {
     const newData = data;

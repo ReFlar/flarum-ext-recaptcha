@@ -13,7 +13,6 @@ System.register('flarum/recaptcha/main', ['flarum/app', 'flarum/extend', 'flarum
       SignUpModal = _flarumComponentsSignUpModal.default;
     }],
     execute: function () {
-      // import LogInModal from 'flarum/components/LogInModal';
 
       app.initializers.add('flarum-recaptcha', function () {
         var isAvail = function isAvail() {
@@ -51,14 +50,14 @@ System.register('flarum/recaptcha/main', ['flarum/app', 'flarum/extend', 'flarum
             render();
           } else {
             $.getScript('https://www.google.com/recaptcha/api.js?hl=' + app.locale + '&render=explicit', function () {
-              var attemps = 0;
+              var attempts = 0;
               var interval = setInterval(function () {
-                ++attemps;
+                ++attempts;
                 if (isAvail()) {
                   clearInterval(interval);
                   render();
                 }
-                if (attemps > 100) {
+                if (attempts > 100) {
                   clearInterval(interval);
                 }
               }, 100);
@@ -66,13 +65,11 @@ System.register('flarum/recaptcha/main', ['flarum/app', 'flarum/extend', 'flarum
           }
         }
         extend(SignUpModal.prototype, 'config', load);
-        // extend(LogInModal.prototype, 'config', load);
 
         function clean() {
           this.$('.g-recaptcha').remove();
         }
         extend(SignUpModal.prototype, 'logIn', clean);
-        // extend(LogInModal.prototype, 'signUp', clean);
 
         extend(SignUpModal.prototype, 'submitData', function (data) {
           var newData = data;
