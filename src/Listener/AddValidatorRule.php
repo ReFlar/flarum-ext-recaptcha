@@ -1,14 +1,11 @@
 <?php
 
-namespace Sijad\ReCaptcha\Listener;
+namespace Flarum\ReCaptcha\Listener;
 
-use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Contracts\Bus\Dispatcher as BusDispatcher;
-use Flarum\Event\ConfigureValidator;
-use Flarum\Core\Validator\UserValidator;
-use Flarum\Core\Command\RegisterUser;
+use Flarum\Foundation\Event\Validating;
+use Flarum\ReCaptcha\ReCaptchaValidator;
 use Flarum\Settings\SettingsRepositoryInterface;
-use Sijad\ReCaptcha\RecaptchaValidator;
+use Illuminate\Contracts\Events\Dispatcher;
 use ReCaptcha\ReCaptcha;
 
 class AddValidatorRule {
@@ -27,13 +24,13 @@ class AddValidatorRule {
 
     public function subscribe(Dispatcher $events)
     {
-        $events->listen(ConfigureValidator::class, [$this, 'addRule']);
+        $events->listen(Validating::class, [$this, 'addRule']);
     }
 
-    public function addRule(ConfigureValidator $event) {
-        $secret = $this->settings->get('sijad-recaptcha.secret');
+    public function addRule(Validating $event) {
+        $secret = $this->settings->get('flarum-recaptcha.secret');
         if (! empty($secret)) {
-            if ($event->type instanceof RecaptchaValidator) {
+            if ($event->type instanceof ReCaptchaValidator) {
                 $event->validator->addExtension(
                     'recaptcha',
                     function($attribute, $value, $parameters) use ($secret) {

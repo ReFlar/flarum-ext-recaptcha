@@ -2,6 +2,6 @@ const gulp = require('flarum-gulp');
 
 gulp({
   modules: {
-    'sijad/recaptcha': 'src/**/*.js',
+    'flarum/recaptcha': 'src/**/*.js',
   },
 });

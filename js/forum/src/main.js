@@ -6,7 +6,7 @@ import { extend } from 'flarum/extend';
 import SignUpModal from 'flarum/components/SignUpModal';
 // import LogInModal from 'flarum/components/LogInModal';
 
-app.initializers.add('sijad-recaptcha', () => {
+app.initializers.add('flarum-recaptcha', () => {
   const isAvail = () => typeof grecaptcha !== 'undefined';
   const recaptchaValue = m.prop();
   const recaptchaID = m.prop();

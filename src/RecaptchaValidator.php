@@ -1,10 +1,10 @@
 <?php
 
-namespace Sijad\ReCaptcha;
+namespace Flarum\ReCaptcha;
 
-use Flarum\Core\Validator\AbstractValidator;
+use Flarum\Foundation\AbstractValidator;
 
-class RecaptchaValidator extends AbstractValidator
+class ReCaptchaValidator extends AbstractValidator
 {
     /**
      * {@inheritdoc}

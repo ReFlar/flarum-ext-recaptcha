@@ -1,22 +1,20 @@
 <?php
 
-namespace Sijad\ReCaptcha;
+namespace Flarum\ReCaptcha;
 
-use Illuminate\Contracts\Events\Dispatcher;
-use Flarum\Core\Command\RegisterUser;
-use Sijad\ReCaptcha\Listener;
+use Flarum\User\Command\RegisterUser;
 
 class Validate
 {
     /**
-     * @var UserValidator
+     * @var ReCaptchaValidator
      */
     protected $validator;
 
     /**
-     * @param UserValidator $validator
+     * @param ReCaptchaValidator $validator
      */
-    public function __construct(RecaptchaValidator $validator)
+    public function __construct(ReCaptchaValidator $validator)
     {
         $this->validator = $validator;
     }

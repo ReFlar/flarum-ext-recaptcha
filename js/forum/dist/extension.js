@@ -1,6 +1,6 @@
 'use strict';
 
-System.register('sijad/recaptcha/main', ['flarum/app', 'flarum/extend', 'flarum/components/SignUpModal'], function (_export, _context) {
+System.register('flarum/recaptcha/main', ['flarum/app', 'flarum/extend', 'flarum/components/SignUpModal'], function (_export, _context) {
   "use strict";
 
   var app, extend, SignUpModal;
@@ -15,7 +15,7 @@ System.register('sijad/recaptcha/main', ['flarum/app', 'flarum/extend', 'flarum/
     execute: function () {
       // import LogInModal from 'flarum/components/LogInModal';
 
-      app.initializers.add('sijad-recaptcha', function () {
+      app.initializers.add('flarum-recaptcha', function () {
         var isAvail = function isAvail() {
           return typeof grecaptcha !== 'undefined';
         };

@@ -1,16 +1,28 @@
 <?php
 
+namespace Flarum\ReCaptcha;
+
+use Flarum\Extend;
+use Flarum\Foundation\Application;
 use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Contracts\Bus\Dispatcher as BusDispatcher;
-use Sijad\ReCaptcha\Listener;
-use Sijad\ReCaptcha\Api\Controller\CreateUserController;
-use Sijad\ReCaptcha\Forum\Controller\LogInController;
+use Illuminate\Contracts\Bus\Dispatcher as Bus;
 
+return [
+    (new Extend\Assets('forum'))
+        ->asset(__DIR__.'/js/forum/dist/extension.js')
+        ->asset(__DIR__.'/less/forum/extension.less')
+        ->bootstrapper('flarum/recaptcha/main'),
+    (new Extend\Assets('admin'))
+        ->asset(__DIR__.'/js/admin/dist/extension.js')
+        ->bootstrapper('flarum/recaptcha/main'),
+    (new Extend\Locales(__DIR__.'/locale')),
+    function (Application $app) {
+        /** @var Dispatcher $events */
+        $events = $app['events'];
+        /** @var Bus $bus */
+        $bus = $app[Bus::class];
 
-return function (Dispatcher $events, BusDispatcher $bus) {
-    $events->subscribe(Listener\AddClientAssets::class);
-    $events->subscribe(Listener\AddValidatorRule::class);
-    $events->subscribe(Listener\AddApiAttributes::class);
-
-    $bus->pipeThrough(['Sijad\ReCaptcha\Validate']);
-};
+        $events->subscribe(Listener\AddApiAttributes::class);
+        $bus->pipeThrough([Validate::class]);
+    }
+];
